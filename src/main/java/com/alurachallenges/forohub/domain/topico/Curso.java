@@ -5,5 +5,6 @@ public enum Curso {
     ALGEBRA,
     CALCULO,
     ANALISIS,
-    GEOMETRIA
+    GEOMETRIA,
+    OTROS
 }
