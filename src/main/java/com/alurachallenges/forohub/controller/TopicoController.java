@@ -68,6 +68,7 @@ public class TopicoController {
         }
     }
 
+    //Método para actualizar un tópico
     @PutMapping ("/{id}")
     @Transactional
     public ResponseEntity actualizarTopico(@RequestBody @Valid DatosActualizarTopico datosActualizarTopico) {
