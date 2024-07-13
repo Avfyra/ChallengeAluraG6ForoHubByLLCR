@@ -54,9 +54,18 @@ public class TopicoController {
     @GetMapping("/{id}")
     @Transactional
     public ResponseEntity<DatosRespuestaTopico> retornaDatosTopico(@PathVariable Long id) {
-        Topico topico = topicoRepository.getReferenceById(id);
-        var datosTopico = new DatosRespuestaTopico(topico, topico.getAutor().getLogin());
-        return ResponseEntity.ok(datosTopico);
+        Optional<Topico> topicoOptional = topicoRepository.findById(id);
+        if (topicoOptional.isPresent()) {
+            Topico topico = topicoOptional.get();
+            if (topico.isActivo()) { // Verifica si el tópico está activo
+                var datosTopico = new DatosRespuestaTopico(topico, topico.getAutor().getLogin());
+                return ResponseEntity.ok(datosTopico);
+            } else {
+                return ResponseEntity.notFound().build(); // Tópico no encontrado
+            }
+        } else {
+            return ResponseEntity.badRequest().build(); // ID no válido
+        }
     }
 
     @PutMapping ("/{id}")
